@@ -24,15 +24,11 @@ train_ml_data = [ml_data[random_idx[idx]]
 test_ml_data = [ml_data[random_idx[TRAIN_LENGTH + idx]]
                     for idx in range(TEST_LENGTH)]
 
-cache = dict()
 def k_nearest_neighbors(train_ml_data, query_image, k):
 	if k == 1:
 		return min(train_ml_data, key=lambda x: norm(x.data - query_image)).label
 	nearest = sorted(train_ml_data, key=lambda x: norm(x.data - query_image))
-	key = hash(query_image.tobytes())
-	if key not in cache:
-		cache[key] = nearest
-	k_nearest = cache[key][:k]
+	k_nearest = nearest[:k]
 	return Counter(map(lambda x: x.label, k_nearest)).most_common()[0][0]
 
 def k_nearest_accuracy(train_ml_data, test_ml_data, k):
@@ -66,4 +62,4 @@ def plot_as_function_of_n(ml):
     plt.show()
 
 if __name__ == "__main__":
-    plot_as_function_of_n(ml)
+    plot_as_function_of_k(ml)
