@@ -5,7 +5,6 @@ from numpy.linalg import norm
 import numpy.random
 import functools
 
-
 class MLData:
     def __init__(self, data, labels):
         self.data = data
@@ -63,3 +62,4 @@ def plot_as_function_of_n(ml):
 
 if __name__ == "__main__":
     plot_as_function_of_k(ml)
+    plot_as_function_of_n(ml)
