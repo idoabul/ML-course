@@ -1,5 +1,5 @@
 #################################
-# Your name:
+# Your name: Ido Abulafya
 #################################
 
 # Please import and use stuff only from the packages numpy, sklearn, matplotlib.
@@ -8,7 +8,6 @@ import numpy as np
 from process_data import parse_data
 
 np.random.seed(7)
-
 
 def run_adaboost(X_train, y_train, T):
     """
@@ -29,17 +28,14 @@ def run_adaboost(X_train, y_train, T):
     n = len(X_train)
     D = np.array([1. / n for _ in range(n)])
     for t in range(T):
-        print("t = {}".format(t))
         h, error = WL(D, X_train, y_train)
         weight = 0.5 * np.log((1 - error) / error)
-        print("error: {}".format(error))
         exponents = np.exp(
             np.array([-y*weight*h(x) for x, y in zip(X_train, y_train)])
         )
         D = np.multiply(D, exponents) / np.dot(D, exponents)
         hypotheses.append(h)
         alpha_vals.append(weight)
-    print(hypotheses, alpha_vals)
     return hypotheses, alpha_vals
 
 
@@ -140,12 +136,11 @@ def main():
     # section b
     T = 10
     hypotheses, alpha_vals = run_adaboost(X_train, y_train, T)
-    print([vocab[h.index] for h in hypotheses])
+    # print([vocab[h.index] for h in hypotheses])
 
     # section c
     T = 80
     hypotheses, alpha_vals = run_adaboost(X_train, y_train, T)
-    print([vocab[h.index] for h in hypotheses])
     train_errors = []
     test_errors = []
     for t in range(1, T + 1):
@@ -159,13 +154,7 @@ def main():
     plt.plot(ts, test_errors ,marker='o', label = 'loss of test set')
     plt.xlabel('t')
     plt.legend()
-    plt.show()
-
-    ##############################################
-    # You can add more methods here, if needed.
-
-
-    ##############################################
+    # plt.show()
 
 if __name__ == '__main__':
     main()
